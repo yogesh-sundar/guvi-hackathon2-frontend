@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState} from "react";
+// import axios from "axios";
+import "./App.css";
+import { BrowserRouter } from "react-router-dom";
+import Navbar from "./Components/Navbar";
+import { Route, Routes } from "react-router";
+import Cart from "./Components/Cart";
 
+const url = "https://guvi-hackathon2-yogesh.herokuapp.com";
+export const productContext = React.createContext();
 function App() {
+  const [cart, setCart] = useState([]);
+  const [cartValue, setCartValue] = useState(cart.length);
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <productContext.Provider
+        value={{
+          cart,
+          setCart,
+          cartValue,
+          setCartValue,
+          url,
+        }}
+      >
+        <Routes>
+          <Route path="/" element={<Navbar />} />
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
+      </productContext.Provider>
+    </BrowserRouter>
   );
 }
 
